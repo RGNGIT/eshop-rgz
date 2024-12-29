@@ -1,53 +1,20 @@
 import { useState, useEffect } from 'react';
 import CarouselNextButton from "./carousel-next-button";
 import CarouselPrevButton from "./carousel-prev-button";
+import { getTrendingItems } from '../api';
 
 export default function Carousel(props) {
   const [items, setItems] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const loadXMLItems = async () => {
-      const xmlText = `<?xml version="1.0" encoding="UTF-8"?>
-<items>
-    <item>
-        <name>Футболка спортивная</name>
-        <image>images/nike-shirt.jpg</image>
-    </item>
-    <item>
-        <name>Кроссовки</name>
-        <image>images/adidas-sneakers.jpg</image>
-    </item>
-    <item>
-        <name>Шорты спортивные</name>
-        <image>images/puma-shorts.jpg</image>
-    </item>
-    <item>
-        <name>Толстовка спортивная</name>
-        <image>images/tnf.png</image>
-    </item>
-    <item>
-        <name>Кепка</name>
-        <image>images/item5.jpg</image>
-    </item>
-    <item>
-        <name>Беговые брюки</name>
-        <image>images/item6.jpg</image>
-    </item>
-    <item>
-        <name>Спортивный костюм</name>
-        <image>images/item7.jpg</image>
-    </item>
-</items>`;
-      const parser = new DOMParser();
-      const xml = parser.parseFromString(xmlText, "application/xml");
+    const loadItems = async () => {
+      const items = await getTrendingItems();
 
-      const itemsFromXML = xml.getElementsByTagName('item');
       const loadedItems = [];
-
-      for (let i = 0; i < itemsFromXML.length; i++) {
-        const name = itemsFromXML[i].getElementsByTagName('name')[0].textContent;
-        const image = itemsFromXML[i].getElementsByTagName('image')[0].textContent;
+      for (let i = 0; i < items.length; i++) {
+        const name = items[i]['name'];
+        const image = items[i]['image'];
 
         loadedItems.push({ name, image });
       }
@@ -55,7 +22,7 @@ export default function Carousel(props) {
       setItems(loadedItems);
     };
 
-    loadXMLItems();
+    loadItems();
   }, []);
 
   const updateCarousel = (newIndex) => {
