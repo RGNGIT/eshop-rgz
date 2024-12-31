@@ -1,14 +1,14 @@
-import Carousel from "./components/carousel-component";
-import './App.css';
-import Header from "./components/header-component";
-import Footer from "./components/footer-component";
+import Auth from "./components/pages/Auth";
+import Landing from "./components/pages/Landing";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 export default function App() {
-    return (
-        <div>
-            <Header />
-            <Carousel />
-            <Footer/>
-        </div>
-    );
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/auth" element={<Auth />} />
+      </Routes>
+    </Router>
+  );
 }

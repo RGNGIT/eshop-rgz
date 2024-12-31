@@ -9,7 +9,7 @@ export default function Carousel(props) {
 
   useEffect(() => {
     const loadItems = async () => {
-      const items = await getTrendingItems();
+      const items = []; //await getTrendingItems();
 
       const loadedItems = [];
       for (let i = 0; i < items.length; i++) {
