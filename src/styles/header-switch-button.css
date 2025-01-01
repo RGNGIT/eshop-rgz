@@ -1,11 +1,9 @@
 .header-button {
   display: inline-block;
   padding: 15px 20px;
-  margin-left: 10px;
-  margin-right: 10px;
   border: 0px solid #333;
   background-color: #4CAF50;
-  color: #333;
+  color: #ffffff;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -13,5 +11,4 @@
 
 .header-button:hover {
   background-color: rgba(0, 0, 0, 0.1);
-  color: #000;
 }
