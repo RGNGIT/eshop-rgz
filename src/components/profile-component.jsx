@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import '../styles/profile.css';
+import { getCurrentUserInfo } from "../api";
+import { defineUserFriendlyRoleName } from "../utils";
 
 export default function UserProfile() {
   const [isEditing, setIsEditing] = useState(false);
   const [user, setUser] = useState({
-    avatar: "https://via.placeholder.com/150", // Замени ссылку на реальное изображение
-    name: "Иван Иванов",
-    email: "ivan.ivanov@example.com",
+    avatar: "",
+    name: "",
+    role: ""
   });
 
   const [editValues, setEditValues] = useState(user);
@@ -17,13 +19,24 @@ export default function UserProfile() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setEditValues((prev) => ({ ...prev, [name]: value }));
+    // setEditValues((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSave = () => {
-    setUser(editValues);
+    // setUser(editValues);
     setIsEditing(false);
   };
+
+  useEffect(() => {
+    const fetchInfo = async () => {
+      const response = await getCurrentUserInfo();
+      if (response.status != 200)
+        alert(response.data);
+      else
+        setUser({ name: `${response.data.last_name} ${response.data.name} ${response.data.middle_name}`, role: defineUserFriendlyRoleName(response.data.role), avatar: response.data.avatar });
+    }
+    fetchInfo();
+  }, [])
 
   return (
     <div className="profile-container">
@@ -39,9 +52,9 @@ export default function UserProfile() {
             className="input"
           />
           <input
-            type="email"
-            name="email"
-            value={editValues.email}
+            type="role"
+            name="role"
+            value={editValues.role}
             onChange={handleInputChange}
             placeholder="Email"
             className="input"
@@ -53,7 +66,7 @@ export default function UserProfile() {
       ) : (
         <div className="view-container">
           <h2>{user.name}</h2>
-          <p>{user.email}</p>
+          <p>{user.role}</p>
           <button onClick={handleEditToggle} className="profile-edit-button">
             Редактировать
           </button>

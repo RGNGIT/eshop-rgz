@@ -10,3 +10,14 @@ export function toSnakeCase(obj) {
   }
   return obj;
 }
+
+export function defineUserFriendlyRoleName(name) {
+  switch (name) {
+    case 'admin':
+      return 'Администратор';
+    case 'audit':
+      return 'Аудитор';
+    case 'user':
+      return 'Автовладелец';
+  }
+}

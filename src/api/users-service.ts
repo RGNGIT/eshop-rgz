@@ -45,3 +45,17 @@ export const login = async (user: User): Promise<ApiResponse> => {
     return { status: e.response.status, data: e.response.data };
   }
 };
+
+export const getCurrentUserInfo = async (): Promise<ApiResponse> => {
+  try {
+    const token = localStorage.getItem("userToken");
+    if (!token)
+      console.log("Get current info with token failed. No valid token.");
+
+    const response = await apiClient.post('/users/current', { token });
+    return { status: response.status, data: response.data };
+  }
+  catch (e: any) {
+    return { status: e.response.status, data: e.response.data };
+  }
+}
