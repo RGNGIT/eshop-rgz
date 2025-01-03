@@ -10,7 +10,7 @@ export default function Header() {
 
   headerButtons.push(!localStorage.getItem('userToken') ?
     <HeaderSwitchButton text="Авторизация" onClick={() => navigate("/auth")} style={{ float: "right" }} /> :
-    <HeaderProfileButton text={localStorage.getItem("fullName")} onClick={() => navigate("/profile")} style={{ float: "right" }} />
+    <HeaderProfileButton avatar="https://sun9-42.userapi.com/impg/IM_2MG3e_IBI7A0m3KQv_7iAt55IRiQw_QfTBA/CroXHytQz7A.jpg?size=820x1080&quality=95&sign=54bab269ca141375fa83f90590b7a3c5&type=album" text={localStorage.getItem("fullName")} onClick={() => navigate("/profile")} style={{ float: "right" }} />
   );
 
   if (location.pathname != '/')
