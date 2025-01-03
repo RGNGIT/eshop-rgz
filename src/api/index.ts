@@ -4,3 +4,4 @@ export interface ApiResponse {
 }
 
 export * from './users-service';
+export * from './dictionary-service';

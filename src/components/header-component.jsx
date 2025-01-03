@@ -1,3 +1,4 @@
+import HeaderProfileButton from "./header-profile-button";
 import HeaderSwitchButton from "./header-switch-button";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -7,30 +8,21 @@ export default function Header() {
 
   const headerButtons = [];
 
-  function logoff() {
-    localStorage.removeItem("userToken");
-    localStorage.removeItem("fullName");
-    localStorage.removeItem("login");
+  headerButtons.push(!localStorage.getItem('userToken') ?
+    <HeaderSwitchButton text="Авторизация" onClick={() => navigate("/auth")} style={{ float: "right" }} /> :
+    <HeaderProfileButton text={localStorage.getItem("fullName")} onClick={() => navigate("/profile")} style={{ float: "right" }} />
+  );
 
-    navigate("/");
-  }
+  if (location.pathname != '/')
+    headerButtons.push(<HeaderSwitchButton text="На главную" onClick={() => navigate("/")} style={{ float: "left" }} />);
 
   switch (location.pathname) {
     case '/':
-      // Пуш кнопки авторизации
-      headerButtons.push(!localStorage.getItem('userToken') ?
-        <HeaderSwitchButton text="Авторизация" onClick={() => navigate("/auth")} style={{ marginLeft: "auto" }} /> :
-        <HeaderSwitchButton text={localStorage.getItem("fullName")} onClick={() => navigate("/profile")} style={{ marginLeft: "auto" }} />
-      );
-      break;
-    case '/profile':
-      // Пуш кнопки логофа
-      headerButtons.push(<HeaderSwitchButton text="Выйти из профиля" onClick={() => logoff()} style={{ marginLeft: "auto" }} />);
-    case '/auth':
-      // Пуш кнопки на главную
-      headerButtons.push(<HeaderSwitchButton text="На главную" onClick={() => navigate("/")} style={{ marginLeft: "auto" }} />);
+      // Пуш кнопки управления у админа
+      if (localStorage.getItem("role") == 'admin')
+        headerButtons.push(<HeaderSwitchButton text={"Управление"} onClick={() => navigate("/management")} style={{ float: "left" }} />);
       break;
   }
 
-  return <header>{headerButtons}</header>
+  return <header style={{height: "49px"}}>{headerButtons}</header>
 }

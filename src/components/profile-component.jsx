@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import '../styles/profile.css';
 import { getCurrentUserInfo } from "../api";
 import { defineUserFriendlyRoleName } from "../utils";
+import { useNavigate } from "react-router-dom";
 
 export default function UserProfile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -11,7 +12,17 @@ export default function UserProfile() {
     role: ""
   });
 
+  const navigate = useNavigate();
   const [editValues, setEditValues] = useState(user);
+
+  function logoff() {
+    localStorage.removeItem("userToken");
+    localStorage.removeItem("fullName");
+    localStorage.removeItem("login");
+    localStorage.removeItem("role");
+
+    navigate("/");
+  }
 
   const handleEditToggle = () => {
     setIsEditing(!isEditing);
@@ -41,6 +52,10 @@ export default function UserProfile() {
   return (
     <div className="profile-container">
       <img src={user.avatar} alt="Avatar" className="avatar" />
+      <div style={{ marginTop: "25px", marginLeft: "10px" }}>
+        <h2>{user.name}</h2>
+        <p>{user.role}</p>
+      </div>
       {isEditing ? (
         <div className="edit-container">
           <input
@@ -59,16 +74,17 @@ export default function UserProfile() {
             placeholder="Email"
             className="input"
           />
-          <button onClick={handleSave} className="profile-edit-button">
+          <button onClick={handleSave} className="profile-button">
             Сохранить
           </button>
         </div>
       ) : (
         <div className="view-container">
-          <h2>{user.name}</h2>
-          <p>{user.role}</p>
-          <button onClick={handleEditToggle} className="profile-edit-button">
+          <button style={{marginLeft: "15px"}} onClick={handleEditToggle} className="profile-button">
             Редактировать
+          </button>
+          <button style={{marginLeft: "15px"}} onClick={logoff} className="profile-button">
+            Выйти
           </button>
         </div>
       )}

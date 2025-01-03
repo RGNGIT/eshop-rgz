@@ -41,6 +41,7 @@ export default function AuthForm() {
         localStorage.setItem("userToken", response.data?.token);
         localStorage.setItem("fullName", response.data?.fullName);
         localStorage.setItem("login", response.data?.login);
+        localStorage.setItem("role", response.data?.role);
 
         navigate("/");
       }
@@ -60,6 +61,7 @@ export default function AuthForm() {
         localStorage.setItem("userToken", response.data?.token);
         localStorage.setItem("fullName", response.data?.fullName);
         localStorage.setItem("login", response.data?.login);
+        localStorage.setItem("role", response.data?.role);
 
         navigate("/");
       }

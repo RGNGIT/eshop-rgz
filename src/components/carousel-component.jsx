@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import CarouselNextButton from "./carousel-next-button";
 import CarouselPrevButton from "./carousel-prev-button";
-import { getTrendingItems } from '../api';
+import { getCarouselData } from '../api';
 
 export default function Carousel(props) {
   const [items, setItems] = useState([]);
@@ -9,8 +9,8 @@ export default function Carousel(props) {
 
   useEffect(() => {
     const loadItems = async () => {
-      const items = []; //await getTrendingItems();
-
+      const items = (await getCarouselData())?.data;;
+      
       const loadedItems = [];
       for (let i = 0; i < items.length; i++) {
         const name = items[i]['name'];
@@ -49,6 +49,7 @@ export default function Carousel(props) {
 
   return (
     <div className="carousel-container">
+      <h1 className="main-heading">Последние новости</h1>
       <div
         className="carousel"
         style={{
