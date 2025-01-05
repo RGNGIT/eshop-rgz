@@ -15,6 +15,7 @@ import {
   getAllStreetTypes,
   getAllVehicles,
   getAllVehicleTypes,
+  getAllRegistrations
 } from "../api";
 
 export function AdminPanel() {
@@ -30,7 +31,8 @@ export function AdminPanel() {
     "Адрес",
     "Транспортное средство",
     "Марка",
-    "Модель"
+    "Модель",
+    "Регистрация"
   ];
 
   const [currentDictionary, setCurrentDictionary] = useState(dictionaries[0]);
@@ -48,7 +50,8 @@ export function AdminPanel() {
     "Адрес": getAllAddressees,
     "Транспортное средство": getAllVehicles,
     "Марка": getAllMarks,
-    "Модель": getAllModels
+    "Модель": getAllModels,
+    "Регистрация": getAllRegistrations
   };
 
   const dataMapping = {
@@ -82,7 +85,8 @@ export function AdminPanel() {
       })),
     "Транспортное средство": (data) => data.map((e) => ({ ИД: e.id, "Дата выпуска": e.release_date, "Номер двигателя": e.engine_number, "Тип": e.vehicle_type.name, "Модель": e.vehicle_model.name, "Кузов": e.carcas.name, "Цвет": e.color.name })),
     "Марка": (data) => data.map((e) => ({ ИД: e.id, Наименование: e.name, "Краткое наименование": e.short_name, "Страна": e.country.name })),
-    "Модель": (data) => data.map((e) => ({ ИД: e.id, Наименование: e.name, "Краткое наименование": e.short_name, "Марка": e.vehicle_mark.name }))
+    "Модель": (data) => data.map((e) => ({ ИД: e.id, Наименование: e.name, "Краткое наименование": e.short_name, "Марка": e.vehicle_mark.name })),
+    "Регистрация": (data) => data.map((e) => ({ ИД: e.id, "Номер": e.number, "Дата": e.date, "Транспортное средство": `${e.vehicle.vehicle_model.vehicle_mark.name} ${e.vehicle.vehicle_model.name} (${e.vehicle.vehicle_model.vehicle_mark.short_name}, ${e.vehicle.vehicle_model.short_name})`, "Владелец": `${e.user.last_name} ${e.user.name} ${e.user.middle_name}` }))
   };
 
   // Тут модалку открыть на креейт

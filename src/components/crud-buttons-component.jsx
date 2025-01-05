@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { deleteEntity } from '../api/common-service';
-import "../styles/crud-modal.css";
+import { ConfirmModal } from "./modals/confirm-modal";
 
 export function CrudButtons({ id, entity, data, setData }) {
   const [isDeletionModalOpen, setIsDeletionModalOpen] = useState(false);
@@ -9,14 +9,14 @@ export function CrudButtons({ id, entity, data, setData }) {
     setIsDeletionModalOpen(true);
   }
 
-  function closeModal() {
+  function closeDeletionModal() {
     setIsDeletionModalOpen(false);
   }
 
   function confirmDelete() {
     setData(data.filter(item => item.ИД != id));
     deleteEntity(entity, id);
-    closeModal();
+    closeDeletionModal();
   }
 
   return (
@@ -31,21 +31,7 @@ export function CrudButtons({ id, entity, data, setData }) {
       <button className="crud-button" onClick={openDeletionModal}>
         Удалить
       </button>
-      {isDeletionModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <p>Вы уверены что хотите удалить запись?</p>
-            <div className="modal-buttons">
-              <button style={{ marginRight: "15px" }} className="modal-button" onClick={confirmDelete}>
-                Да
-              </button>
-              <button className="modal-button" onClick={closeModal}>
-                Нет
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {isDeletionModalOpen && (<ConfirmModal message={"Вы точно желаете удалить запись?"} onConfirm={confirmDelete} onCloseModal={closeDeletionModal} />)}
     </div>
   );
 }

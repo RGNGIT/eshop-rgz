@@ -3,6 +3,7 @@ import '../styles/profile.css';
 import { getCurrentUserInfo } from "../api";
 import { defineUserFriendlyRoleName } from "../utils";
 import { useNavigate } from "react-router-dom";
+import { ConfirmModal } from "./modals/confirm-modal";
 
 export default function UserProfile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -11,6 +12,16 @@ export default function UserProfile() {
     name: "",
     role: ""
   });
+
+  const [isLogoffModalOpen, setIsLogoffModalOpen] = useState(false);
+
+  function openLogoffModal() {
+    setIsLogoffModalOpen(true);
+  }
+
+  function closeLogoffModal() {
+    setIsLogoffModalOpen(false);
+  }
 
   const navigate = useNavigate();
   const [editValues, setEditValues] = useState(user);
@@ -87,9 +98,10 @@ export default function UserProfile() {
           <button style={{ marginLeft: "15px" }} onClick={handleEditToggle} className="profile-button">
             Редактировать
           </button>
-          <button style={{ marginLeft: "15px" }} onClick={logoff} className="profile-button">
+          <button style={{ marginLeft: "15px" }} onClick={openLogoffModal} className="profile-button">
             Выйти
           </button>
+          {isLogoffModalOpen && (<ConfirmModal message={"Вы точно желаете выйти?"} onConfirm={logoff} onCloseModal={closeLogoffModal} />)}
         </div>
       )}
     </div>
