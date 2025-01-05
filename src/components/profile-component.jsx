@@ -20,6 +20,7 @@ export default function UserProfile() {
     localStorage.removeItem("fullName");
     localStorage.removeItem("login");
     localStorage.removeItem("role");
+    localStorage.removeItem("avatar");
 
     navigate("/");
   }
@@ -43,8 +44,11 @@ export default function UserProfile() {
       const response = await getCurrentUserInfo();
       if (response.status != 200)
         alert(response.data);
-      else
+      else {
         setUser({ name: `${response.data.last_name} ${response.data.name} ${response.data.middle_name}`, role: defineUserFriendlyRoleName(response.data.role), avatar: response.data.avatar });
+        if (localStorage.getItem('avatar') != response.data.avatar)
+          localStorage.setItem('avatar', response.data.avatar);
+      }
     }
     fetchInfo();
   }, [])
@@ -80,10 +84,10 @@ export default function UserProfile() {
         </div>
       ) : (
         <div className="view-container">
-          <button style={{marginLeft: "15px"}} onClick={handleEditToggle} className="profile-button">
+          <button style={{ marginLeft: "15px" }} onClick={handleEditToggle} className="profile-button">
             Редактировать
           </button>
-          <button style={{marginLeft: "15px"}} onClick={logoff} className="profile-button">
+          <button style={{ marginLeft: "15px" }} onClick={logoff} className="profile-button">
             Выйти
           </button>
         </div>
