@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Sidebar } from "./admin-panel-sidebar-component";
 import { Header } from "./admin-panel-header";
 import { DataList } from "./admin-panel-datalist";
+import { CreateModal } from "./modals/create-modal";
 import {
   getAllAddressees,
   getAllCarcasses,
@@ -36,6 +37,7 @@ export function AdminPanel() {
   ];
 
   const [currentDictionary, setCurrentDictionary] = useState(dictionaries[0]);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [data, setData] = useState([]);
 
   const dictionaryFetchMap = {
@@ -89,10 +91,15 @@ export function AdminPanel() {
     "Регистрация": (data) => data.map((e) => ({ ИД: e.id, "Номер": e.number, "Дата": e.date, "Транспортное средство": `${e.vehicle.vehicle_model.vehicle_mark.name} ${e.vehicle.vehicle_model.name} (${e.vehicle.vehicle_model.vehicle_mark.short_name}, ${e.vehicle.vehicle_model.short_name})`, "Владелец": `${e.user.last_name} ${e.user.name} ${e.user.middle_name}` }))
   };
 
+  function closeCreateModal() {
+    setIsCreateModalOpen(false);
+  }
+
   // Тут модалку открыть на креейт
   const onAdd = () => {
-    const newItem = { id: Date.now(), name: "Новое значение" };
-    setData((prevData) => [...prevData, newItem]);
+    setIsCreateModalOpen(true);
+    // const newItem = { id: Date.now(), name: "Новое значение" };
+    // setData((prevData) => [...prevData, newItem]);
   };
 
   useEffect(() => {
@@ -134,6 +141,7 @@ export function AdminPanel() {
           <DataList data={data} entity={currentDictionary} setData={setData} />
         </div>
       </div>
+      {isCreateModalOpen && (<CreateModal entity={currentDictionary} data={data} setData={setData} closeModal={closeCreateModal} />)}
     </div>
   );
 }

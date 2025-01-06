@@ -1,5 +1,6 @@
 import React from "react";
 import { CrudButtons } from "./crud-buttons-component";
+import { isAdmin } from "../utils";
 
 export function DataList({ data, entity, setData }) {
   return (
@@ -22,9 +23,12 @@ export function DataList({ data, entity, setData }) {
                 {value}
               </td>
             ))}
-            <td key="CRUD" style={{ border: "1px solid #ccc", padding: "5px", width: "300px" }}>
-              <CrudButtons id={item.ИД} entity={entity} data={data} setData={setData}/>
-            </td>
+            {( isAdmin() ?
+              <td key="CRUD" style={{ border: "1px solid #ccc", padding: "5px", width: "300px" }}>
+                <CrudButtons id={item.ИД} entity={entity} data={data} setData={setData} />
+              </td> :
+              ""
+            )}
           </tr>
         ))}
       </tbody>

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import '../../styles/modal.css';
+import React, { useEffect, useState } from "react";
 import { createEntity, editEntity, getAllLocalities, getAllStreets, getAllUsers } from '../../api';
+import '../../styles/modal.css';
 import { ComboBox } from "../combo-box-component";
 
-export function EditModal({ entity, id, data, setData, closeModal }) {
+export function CreateModal({ entity, data, setData, closeModal }) {
   const [formData, setFormData] = useState({
     name: ""
   });
@@ -191,32 +191,28 @@ export function EditModal({ entity, id, data, setData, closeModal }) {
   }
 
   function onSubmitEntity() {
-    const updateData = async () => {
-      const response = await editEntity(entity, id, formData);
+    const insertData = async () => {
+      const response = await createEntity(entity, formData);
       if (response.status != 200)
         alert(response.data);
       else {
         const deepClonedData = structuredClone(data);
-        for (const key in formData) {
-          if (deepClonedData.hasOwnProperty(propertiesMap[key])) {
-            deepClonedData[propertiesMap[key]] = formData[key];
-          }
-        }
+        deepClonedData.push(formData);
 
         setData(deepClonedData);
       }
     }
 
-    updateData();
+    insertData();
     closeModal();
   }
 
   return <div className="modal-overlay">
     <div className="modal">
-      <p>Редактируем сущность в виде гномика</p>
+      <p>Создаем сущность в виде гномика</p>
       {entityPropertiesMap[entity]}
       <button style={{ marginRight: "15px" }} className="modal-button" onClick={onSubmitEntity}>
-        Применить
+        Создать
       </button>
       <button className="modal-button" onClick={closeModal}>
         Отменить

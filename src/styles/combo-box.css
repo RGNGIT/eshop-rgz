@@ -1,0 +1,26 @@
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+select:focus {
+  border: 1px solid #555;
+  outline: none;
+}
+
+label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  display: block;
+  float: left;
+}
+
+.select-container {
+  margin: 10px 0;
+}
