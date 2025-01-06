@@ -1,37 +1,107 @@
 import React, { useState } from "react";
 import '../../styles/modal.css';
 
-const entityPropertiesMap = {
-  "Цвет": <></>,
-  "Тип кузова": <></>,
-  "Страна": <></>,
-  "Тип транспортного средства": <></>,
-  "Тип населенного пункта": <></>,
-  "Тип улицы": <></>,
-  "Населенный пункт": <></>,
-  "Улица": <></>,
-  "Адрес": <></>,
-  "Транспортное средство": <></>,
-  "Марка": <></>,
-  "Модель": <></>,
-  "Регистрация": <></>
-};
+export function EditModal({ entity, id, onCloseModal }) {
+  const [formData, setFormData] = useState({
+    name: ""
+  });
 
-export function EditModal({ entity, id, onSubmitEntity, onCloseModal }) {
-    const [formData, setFormData] = useState({});
+  const entityPropertiesMap = {
+    "Цвет": [
+      <input
+        type="text"
+        name="name"
+        placeholder="Цвет"
+        value={formData.name}
+        onChange={onInputChange}
+        className="entity-data-input"
+        required
+      />
+    ],
+    "Тип кузова": [
+      <input
+        type="text"
+        name="name"
+        placeholder="Тип кузова"
+        value={formData.name}
+        onChange={onInputChange}
+        className="entity-data-input"
+        required
+      />
+    ],
+    "Страна": [
+      <input
+        type="text"
+        name="name"
+        placeholder="Страна"
+        value={formData.name}
+        onChange={onInputChange}
+        className="entity-data-input"
+        required
+      />
+    ],
+    "Тип транспортного средства": [
+      <input
+        type="text"
+        name="name"
+        placeholder="Тип транспортного средства"
+        value={formData.name}
+        onChange={onInputChange}
+        className="entity-data-input"
+        required
+      />
+    ],
+    "Тип населенного пункта": [
+      <input
+        type="text"
+        name="name"
+        placeholder="Тип населенного пункта"
+        value={formData.name}
+        onChange={onInputChange}
+        className="entity-data-input"
+        required
+      />
+    ],
+    "Тип улицы": [
+      <input
+        type="text"
+        name="name"
+        placeholder="Тип улицы"
+        value={formData.name}
+        onChange={onInputChange}
+        className="entity-data-input"
+        required
+      />
+    ],
+    "Населенный пункт": <></>,
+    "Улица": <></>,
+    "Адрес": <></>,
+    "Транспортное средство": <></>,
+    "Марка": <></>,
+    "Модель": <></>,
+    "Регистрация": <></>
+  };
+
+  function onInputChange(e) {
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      [e.target.name]: e.target.value
+    }));
+  }
+
+  function onSubmitEntity() {
     
-  function onInputChange() {
-
   }
 
   return <div className="modal-overlay">
     <div className="modal">
-      <form onSubmit={onSubmitEntity}>
-        {entityPropertiesMap[entity]}
-        <button className="modal-button" onClick={onCloseModal}>
-          Отменить
-        </button>
-      </form>
+      {entityPropertiesMap[entity]}
+      <button className="modal-button" onClick={onSubmitEntity}>
+        Применить
+      </button>
+      <button className="modal-button" onClick={onCloseModal}>
+        Отменить
+      </button>
     </div>
   </div>
 }
