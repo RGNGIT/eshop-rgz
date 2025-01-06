@@ -42,7 +42,7 @@ export function CrudButtons({ id, entity, data, setData }) {
         Удалить
       </button>
       {isDeletionModalOpen && (<ConfirmModal message={"Вы точно желаете удалить запись?"} onConfirm={confirmDelete} onCloseModal={closeDeletionModal} />)}
-      {isEditModalOpen && (<EditModal entity={entity} id={id} onCloseModal={closeEditModal} />)}
+      {isEditModalOpen && (<EditModal entity={entity} id={id} data={data} setData={setData} closeModal={closeEditModal} />)}
     </div>
   );
 }

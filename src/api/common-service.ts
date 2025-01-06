@@ -27,9 +27,9 @@ export const deleteEntity = async (entity: string, id: number): Promise<ApiRespo
   }
 }
 
-export const editEntity = async (entity: string, id: number, payload: {}): Promise<ApiResponse> => {
+export const editEntity = async (entity: string, id: number, data: {}): Promise<ApiResponse> => {
   try {
-    const response = await apiClient.patch(`${entityMap[entity]}/edit`, { data: { id, payload } });
+    const response = await apiClient.patch(`${entityMap[entity]}/edit`, { id, data });
     return { status: response.status, data: response.data };
   }
   catch (e: any) {

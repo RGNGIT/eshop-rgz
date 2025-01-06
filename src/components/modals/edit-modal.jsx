@@ -1,10 +1,15 @@
 import React, { useState } from "react";
+import { editEntity } from '../../api';
 import '../../styles/modal.css';
 
-export function EditModal({ entity, id, onCloseModal }) {
+export function EditModal({ entity, id, data, setData, closeModal }) {
   const [formData, setFormData] = useState({
     name: ""
   });
+
+  const propertiesMap = {
+    "name": "Наименование"
+  };
 
   const entityPropertiesMap = {
     "Цвет": [
@@ -16,6 +21,7 @@ export function EditModal({ entity, id, onCloseModal }) {
         onChange={onInputChange}
         className="entity-data-input"
         required
+        autocomplete="off"
       />
     ],
     "Тип кузова": [
@@ -27,6 +33,7 @@ export function EditModal({ entity, id, onCloseModal }) {
         onChange={onInputChange}
         className="entity-data-input"
         required
+        autocomplete="off"
       />
     ],
     "Страна": [
@@ -38,6 +45,7 @@ export function EditModal({ entity, id, onCloseModal }) {
         onChange={onInputChange}
         className="entity-data-input"
         required
+        autocomplete="off"
       />
     ],
     "Тип транспортного средства": [
@@ -49,6 +57,7 @@ export function EditModal({ entity, id, onCloseModal }) {
         onChange={onInputChange}
         className="entity-data-input"
         required
+        autocomplete="off"
       />
     ],
     "Тип населенного пункта": [
@@ -60,6 +69,7 @@ export function EditModal({ entity, id, onCloseModal }) {
         onChange={onInputChange}
         className="entity-data-input"
         required
+        autocomplete="off"
       />
     ],
     "Тип улицы": [
@@ -71,15 +81,16 @@ export function EditModal({ entity, id, onCloseModal }) {
         onChange={onInputChange}
         className="entity-data-input"
         required
+        autocomplete="off"
       />
     ],
-    "Населенный пункт": <></>,
-    "Улица": <></>,
-    "Адрес": <></>,
-    "Транспортное средство": <></>,
-    "Марка": <></>,
-    "Модель": <></>,
-    "Регистрация": <></>
+    "Населенный пункт": [],
+    "Улица": [],
+    "Адрес": [],
+    "Транспортное средство": [],
+    "Марка": [],
+    "Модель": [],
+    "Регистрация": []
   };
 
   function onInputChange(e) {
@@ -90,16 +101,34 @@ export function EditModal({ entity, id, onCloseModal }) {
   }
 
   function onSubmitEntity() {
-    
+    const updateData = async () => {
+      const response = await editEntity(entity, id, formData);
+      if (response.status != 200)
+        alert(response.data);
+      else {
+        const deepClonedData = structuredClone(data);
+        for (const key in formData) {
+          if (deepClonedData.hasOwnProperty(propertiesMap[key])) {
+            deepClonedData[propertiesMap[key]] = formData[key];
+          }
+        }
+
+        setData(deepClonedData);
+      }
+    }
+
+    updateData();
+    closeModal();
   }
 
   return <div className="modal-overlay">
     <div className="modal">
+      <p>Редактируем сущность в виде гномика</p>
       {entityPropertiesMap[entity]}
-      <button className="modal-button" onClick={onSubmitEntity}>
+      <button style={{ marginRight: "15px" }} className="modal-button" onClick={onSubmitEntity}>
         Применить
       </button>
-      <button className="modal-button" onClick={onCloseModal}>
+      <button className="modal-button" onClick={closeModal}>
         Отменить
       </button>
     </div>
