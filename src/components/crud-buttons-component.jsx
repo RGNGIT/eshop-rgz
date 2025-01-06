@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { deleteEntity } from '../api/common-service';
 import { ConfirmModal } from "./modals/confirm-modal";
+import { EditModal } from "./modals/edit-modal";
 
 export function CrudButtons({ id, entity, data, setData }) {
   const [isDeletionModalOpen, setIsDeletionModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   function openDeletionModal() {
     setIsDeletionModalOpen(true);
@@ -19,12 +21,25 @@ export function CrudButtons({ id, entity, data, setData }) {
     closeDeletionModal();
   }
 
+  function openEditModal() {
+    setIsEditModalOpen(true);
+  }
+
+  function closeEditModal() {
+    setIsEditModalOpen(false);
+  }
+
+  function submitEdit(e) {
+
+    closeEditModal();
+  }
+
   return (
     <div>
       <button
         className="crud-button"
         style={{ marginRight: "15px" }}
-        onClick={() => console.log(`Редактировать ${entity} с ID: ${id}`)}
+        onClick={openEditModal}
       >
         Редактировать
       </button>
@@ -32,6 +47,7 @@ export function CrudButtons({ id, entity, data, setData }) {
         Удалить
       </button>
       {isDeletionModalOpen && (<ConfirmModal message={"Вы точно желаете удалить запись?"} onConfirm={confirmDelete} onCloseModal={closeDeletionModal} />)}
+      {isEditModalOpen && (<EditModal entity={entity} id={id} onSubmitEntity={submitEdit} onCloseModal={closeEditModal} />)}
     </div>
   );
 }

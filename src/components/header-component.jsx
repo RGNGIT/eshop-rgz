@@ -24,5 +24,5 @@ export default function Header() {
       break;
   }
 
-  return <header style={{height: "49px"}}>{headerButtons}</header>
+  return <header style={{height: "50px"}}>{headerButtons}</header>
 }

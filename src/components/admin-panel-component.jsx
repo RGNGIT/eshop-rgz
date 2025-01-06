@@ -90,7 +90,7 @@ export function AdminPanel() {
   };
 
   // Тут модалку открыть на креейт
-  const handleAdd = () => {
+  const onAdd = () => {
     const newItem = { id: Date.now(), name: "Новое значение" };
     setData((prevData) => [...prevData, newItem]);
   };
@@ -129,7 +129,7 @@ export function AdminPanel() {
         onSelectDictionary={setCurrentDictionary}
       />
       <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-        <Header title={currentDictionary} onAdd={handleAdd} />
+        <Header title={currentDictionary} onAdd={onAdd} />
         <div style={{ flex: 1, overflow: "auto" }}>
           <DataList data={data} entity={currentDictionary} setData={setData} />
         </div>

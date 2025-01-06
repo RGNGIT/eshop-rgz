@@ -9,7 +9,7 @@ export function Sidebar({ dictionaries, currentDictionary, onSelectDictionary })
           <li
             key={dictionary}
             style={{
-              padding: "11.8px 0",
+              padding: "12.1px 0",
               borderBottom: "1px solid #ccc",
               cursor: "pointer",
               fontWeight: currentDictionary === dictionary ? "bold" : "normal",

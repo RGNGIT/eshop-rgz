@@ -7,7 +7,14 @@ const entityDeleteMap: { [key: string]: string } = {
   "Страна": "/dictionaries/countries",
   "Тип транспортного средства": "/dictionaries/vehicle-types",
   "Тип населенного пункта": "/dictionaries/locality-types",
-  "Тип улицы": "/dictionaries/street-types"
+  "Тип улицы": "/dictionaries/street-types",
+  "Населенный пункт": "/localities",
+  "Улица": "/localities/streets",
+  "Адрес": "/localities/addresses",
+  "Транспортное средство": "/vehicles",
+  "Марка": "/vehicles/marks",
+  "Модель": "/vehicles/models",
+  "Регистрация": "/registrations"
 };
 
 export const deleteEntity = async (entity: string, id: number): Promise<ApiResponse> => {

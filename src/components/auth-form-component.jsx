@@ -22,11 +22,11 @@ export default function AuthForm() {
     role: "admin",
   });
 
-  const handleInputChange = (e) => {
+  const onInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     const snakeCasedFormData = toSnakeCase(formData);
@@ -106,7 +106,7 @@ export default function AuthForm() {
           Регистрация
         </button>
       </div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={onSubmit}>
         {activeTab === "login" ? (
           <>
             <input
@@ -114,7 +114,7 @@ export default function AuthForm() {
               name="login"
               placeholder="Логин"
               value={formData.login}
-              onChange={handleInputChange}
+              onChange={onInputChange}
               className="auth-input"
               required
             />
@@ -123,7 +123,7 @@ export default function AuthForm() {
               name="password"
               placeholder="Пароль"
               value={formData.password}
-              onChange={handleInputChange}
+              onChange={onInputChange}
               className="auth-input"
               required
             />
@@ -135,7 +135,7 @@ export default function AuthForm() {
               name="name"
               placeholder="Имя"
               value={formData.name}
-              onChange={handleInputChange}
+              onChange={onInputChange}
               className="auth-input"
               required
             />
@@ -144,7 +144,7 @@ export default function AuthForm() {
               name="lastName"
               placeholder="Фамилия"
               value={formData.lastName}
-              onChange={handleInputChange}
+              onChange={onInputChange}
               className="auth-input"
               required
             />
@@ -153,7 +153,7 @@ export default function AuthForm() {
               name="middleName"
               placeholder="Отчество"
               value={formData.middleName}
-              onChange={handleInputChange}
+              onChange={onInputChange}
               className="auth-input"
               required
             />
@@ -162,7 +162,7 @@ export default function AuthForm() {
               name="dob"
               placeholder="Дата рождения"
               value={formData.dob}
-              onChange={handleInputChange}
+              onChange={onInputChange}
               className="auth-input"
               required
             />
@@ -171,7 +171,7 @@ export default function AuthForm() {
               name="passportSerial"
               placeholder="Серия паспорта"
               value={formData.passportSerial}
-              onChange={handleInputChange}
+              onChange={onInputChange}
               className="auth-input"
               required
             />
@@ -180,7 +180,7 @@ export default function AuthForm() {
               name="passportNumber"
               placeholder="Номер паспорта"
               value={formData.passportNumber}
-              onChange={handleInputChange}
+              onChange={onInputChange}
               className="auth-input"
               required
             />
@@ -189,7 +189,7 @@ export default function AuthForm() {
               name="issued"
               placeholder="Выдан"
               value={formData.issued}
-              onChange={handleInputChange}
+              onChange={onInputChange}
               className="auth-input"
               required
             />
@@ -198,7 +198,7 @@ export default function AuthForm() {
               name="address"
               placeholder="Адрес"
               value={formData.address}
-              onChange={handleInputChange}
+              onChange={onInputChange}
               className="auth-input"
               required
             />
@@ -207,7 +207,7 @@ export default function AuthForm() {
               name="login"
               placeholder="Логин"
               value={formData.login}
-              onChange={handleInputChange}
+              onChange={onInputChange}
               className="auth-input"
               required
             />
@@ -216,7 +216,7 @@ export default function AuthForm() {
               name="password"
               placeholder="Пароль"
               value={formData.password}
-              onChange={handleInputChange}
+              onChange={onInputChange}
               className="auth-input"
               required
             />
@@ -225,14 +225,14 @@ export default function AuthForm() {
               name="confirmPassword"
               placeholder="Повторите пароль"
               value={formData.confirmPassword}
-              onChange={handleInputChange}
+              onChange={onInputChange}
               className="auth-input"
               required
             />
             <select
               name="role"
               value={formData.role}
-              onChange={handleInputChange}
+              onChange={onInputChange}
               className="auth-input"
               style={{ padding: "10px" }}
             >

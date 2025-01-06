@@ -37,11 +37,11 @@ export default function Carousel(props) {
     }
   };
 
-  const handleNext = () => {
+  const onNext = () => {
     updateCarousel(currentIndex + 1);
   };
 
-  const handlePrev = () => {
+  const onPrev = () => {
     updateCarousel(currentIndex - 1);
   };
 
@@ -69,8 +69,8 @@ export default function Carousel(props) {
           <p>Гружу...</p>
         )}
       </div>
-      <CarouselNextButton icon=">" onClick={handleNext} />
-      <CarouselPrevButton icon="<" onClick={handlePrev} />
+      <CarouselNextButton icon=">" onClick={onNext} />
+      <CarouselPrevButton icon="<" onClick={onPrev} />
     </div>
   );
 }

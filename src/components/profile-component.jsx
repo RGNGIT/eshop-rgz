@@ -36,16 +36,16 @@ export default function UserProfile() {
     navigate("/");
   }
 
-  const handleEditToggle = () => {
+  const onEditToggle = () => {
     setIsEditing(!isEditing);
   };
 
-  const handleInputChange = (e) => {
+  const onInputChange = (e) => {
     const { name, value } = e.target;
     // setEditValues((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSave = () => {
+  const onSave = () => {
     // setUser(editValues);
     setIsEditing(false);
   };
@@ -77,7 +77,7 @@ export default function UserProfile() {
             type="text"
             name="name"
             value={editValues.name}
-            onChange={handleInputChange}
+            onChange={onInputChange}
             placeholder="Имя"
             className="input"
           />
@@ -85,17 +85,17 @@ export default function UserProfile() {
             type="role"
             name="role"
             value={editValues.role}
-            onChange={handleInputChange}
+            onChange={onInputChange}
             placeholder="Email"
             className="input"
           />
-          <button onClick={handleSave} className="profile-button">
+          <button onClick={onSave} className="profile-button">
             Сохранить
           </button>
         </div>
       ) : (
         <div className="view-container">
-          <button style={{ marginLeft: "15px" }} onClick={handleEditToggle} className="profile-button">
+          <button style={{ marginLeft: "15px" }} onClick={onEditToggle} className="profile-button">
             Редактировать
           </button>
           <button style={{ marginLeft: "15px" }} onClick={openLogoffModal} className="profile-button">
