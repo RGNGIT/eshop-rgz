@@ -25,3 +25,7 @@ export function defineUserFriendlyRoleName(name) {
 export function isAdmin() {
   return localStorage.getItem('role') == 'admin';
 }
+
+export function isAudit() {
+  return localStorage.getItem('role') == 'audit';
+}

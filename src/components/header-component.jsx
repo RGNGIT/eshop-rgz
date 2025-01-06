@@ -1,6 +1,7 @@
 import HeaderProfileButton from "./header-profile-button";
 import HeaderSwitchButton from "./header-switch-button";
 import { useLocation, useNavigate } from "react-router-dom";
+import { isAdmin, isAudit } from '../utils';
 
 export default function Header() {
   const location = useLocation();
@@ -19,10 +20,12 @@ export default function Header() {
   switch (location.pathname) {
     case '/':
       // Пуш кнопки управления у админа
-      if (localStorage.getItem("role") == 'admin')
+      if (isAdmin())
         headerButtons.push(<HeaderSwitchButton text={"Управление"} onClick={() => navigate("/management")} style={{ float: "left" }} />);
+      if (isAdmin() || isAudit())
+        headerButtons.push(<HeaderSwitchButton text={"Отчеты"} onClick={() => navigate("/reports")} style={{ float: "left" }} />);
       break;
   }
 
-  return <header style={{height: "50px"}}>{headerButtons}</header>
+  return <header style={{ height: "50px" }}>{headerButtons}</header>
 }
