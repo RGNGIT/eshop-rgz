@@ -23,7 +23,7 @@ export function ComboBox({ label, items, displayProperty, onChange }) {
         onChange={onChangeCombo}
       >
         <option value="">Выберите...</option>
-        {items.map((item, index) => (
+        {items?.map((item, index) => (
           <option key={index} value={item[displayProperty]}>
             {item[displayProperty]}
           </option>

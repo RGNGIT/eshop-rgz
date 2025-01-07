@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import '../../styles/modal.css';
-import { createEntity, editEntity, getAllLocalities, getAllStreets, getAllUsers, getAllVehicles } from '../../api';
+import { createEntity, editEntity, getAllCarcasses, getAllColors, getAllLocalities, getAllModels, getAllStreets, getAllUsers, getAllVehicles, getAllVehicleTypes } from '../../api';
 import { ComboBox } from "../combo-box-component";
 
 export function EditModal({ entity, id, data, setData, closeModal }) {
@@ -12,6 +12,10 @@ export function EditModal({ entity, id, data, setData, closeModal }) {
   const [cachedStreets, setCachedStreets] = useState([]);
   const [cachedLocalities, setCachedLocalities] = useState([]);
   const [cachedVehicles, setCachedVehicles] = useState([]);
+  const [cachedVehicleTypes, setCachedVehicleTypes] = useState([]);
+  const [cachedVehicleModels, setCachedVehicleModels] = useState([]);
+  const [cachedCarcases, setCachedCarcases] = useState([]);
+  const [cachedColors, setCachedColors] = useState([]);
 
   const propertiesMap = {
     "name": "Наименование",
@@ -20,7 +24,9 @@ export function EditModal({ entity, id, data, setData, closeModal }) {
     "appartment_number": "Номер квартиры",
     "index": "Индекс",
     "number": "Номер",
-    "date": "Дата"
+    "date": "Дата",
+    "release_date": "Дата выпуска",
+    "engine_number": "Номер двигателя"
   };
 
   const entityPropertiesMap = {
@@ -143,7 +149,32 @@ export function EditModal({ entity, id, data, setData, closeModal }) {
       <ComboBox label={"Улица"} items={cachedStreets} displayProperty={"name"} onChange={setComplexProperty} />,
       <ComboBox label={"Населенный пункт"} items={cachedLocalities} displayProperty={"name"} onChange={setComplexProperty} />
     ],
-    "Транспортное средство": [],
+    "Транспортное средство": [
+      <input
+        type="date"
+        name="release_date"
+        placeholder="Дата выпуска"
+        value={formData.release_date}
+        onChange={onInputChange}
+        className="entity-data-input"
+        required
+        autocomplete="off"
+      />,
+      <input
+        type="text"
+        name="engine_number"
+        placeholder="Номер двигателя"
+        value={formData.engine_number}
+        onChange={onInputChange}
+        className="entity-data-input"
+        required
+        autocomplete="off"
+      />,
+      <ComboBox label={"Тип"} items={cachedVehicleTypes} displayProperty={"name"} onChange={setComplexProperty} />,
+      <ComboBox label={"Модель"} items={cachedVehicleModels} displayProperty={"name"} onChange={setComplexProperty} />,
+      <ComboBox label={"Кузов"} items={cachedCarcases} displayProperty={"name"} onChange={setComplexProperty} />,
+      <ComboBox label={"Цвет"} items={cachedColors} displayProperty={"name"} onChange={setComplexProperty} />
+    ],
     "Марка": [],
     "Модель": [],
     "Регистрация": [
@@ -206,10 +237,50 @@ export function EditModal({ entity, id, data, setData, closeModal }) {
         setCachedVehicles(users.data.map(e => ({ property: "vehicle_id", id: e.id, name: `${e.vehicle_model.vehicle_mark.name} ${e.vehicle_model.name} (${e.vehicle_model.vehicle_mark.short_name}, ${e.vehicle_model.short_name})` })));
     };
 
+    const cacheVehiclesTypes = async () => {
+      const users = await getAllVehicleTypes();
+
+      if (users.status != 200)
+        alert(users.data)
+      else
+        setCachedVehicleTypes(users.data.map(e => ({ property: "vehicle_type_id", id: e.id, name: e.name })));
+    };
+
+    const cacheVehiclesModels = async () => {
+      const users = await getAllModels();
+
+      if (users.status != 200)
+        alert(users.data)
+      else
+        setCachedVehicleModels(users.data.map(e => ({ property: "vehicle_model_id", id: e.id, name: e.name })));
+    };
+
+    const cacheCarcases = async () => {
+      const users = await getAllCarcasses();
+
+      if (users.status != 200)
+        alert(users.data)
+      else
+        setCachedCarcases(users.data.map(e => ({ property: "carcas_id", id: e.id, name: e.name })));
+    };
+
+    const cacheColors = async () => {
+      const users = await getAllColors();
+
+      if (users.status != 200)
+        alert(users.data)
+      else
+        setCachedColors(users.data.map(e => ({ property: "color_id", id: e.id, name: e.name })));
+    };
+
     cacheUsers();
     cacheStreets();
     cacheLocalities();
     cacheVehicles();
+    cacheVehiclesTypes();
+    cacheVehiclesModels();
+    cacheCarcases();
+    cacheColors();
   }, []);
 
   function setComplexProperty(e) {
